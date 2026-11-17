@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Формулы объёма: увидеть, понять, применить</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <nav>
+      <a href="#hero">Главная</a>
+      <a href="#intro">О объёме</a>
+      <a href="#figures">Фигуры</a>
+      <a href="#summary">Итог</a>
+    </nav>
+  </header>
+
+  <section id="hero">
+    <h1>Формулы объёма: увидеть, понять, применить</h1>
+    <p>Не запоминай формулу — пойми, откуда она берётся</p>
+    <button class="btn" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">Начать изучение</button>
+  </section>
+
+  <section id="intro">
+    <h2 style="text-align:center; margin-bottom:1rem;">Что такое объём?</h2>
+    <p style="text-align:center; max-width:700px; margin:0 auto 2rem;">Объём — это мера пространства, занимаемого телом. Он обладает важными свойствами, которые позволяют выводить формулы.</p>
+    <div class="cards" id="property-cards"></div>
+  </section>
+
+  <section id="figures">
+    <h2 style="text-align:center; margin-bottom:1.5rem;">Вывод формул объёма</h2>
+    <div class="tabs" id="figure-tabs"></div>
+    <div class="figure-panel">
+      <canvas id="animation-canvas" width="600" height="350"></canvas>
+      <div class="controls">
+        <button id="btn-pause">Пауза / Продолжить</button>
+        <button id="btn-replay">Повторить</button>
+        <button id="btn-layers">Показать слои</button>
+        <button id="btn-next">Следующий шаг</button>
+      </div>
+      <div id="theory-container"></div>
+      <div id="tasks-container"></div>
+    </div>
+  </section>
+
+  <section id="summary">
+    <h2 style="text-align:center; margin-bottom:1.5rem;">Сводная таблица формул</h2>
+    <div id="summary-table"></div>
+    <div style="text-align:center; margin-top:2rem;">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <p id="progress-text">Прогресс: 0 из 0 заданий решено верно</p>
+      <button class="btn" id="btn-reset" style="margin-top:1rem;">Пройти всё заново</button>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

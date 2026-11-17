@@ -1,9 +1,9 @@
-// ========== ДАННЫЕ КОНТЕНТА ==========
+// ========== ДАННЫЕ ==========
 const properties = [
   { icon: "➕", title: "Аддитивность", text: "Объём тела равен сумме объёмов его неперекрывающихся частей." },
-  { icon: "🔄", title: "Инвариантность", text: "Объём не меняется при перемещении тела в пространстве (движение)." },
-  { icon: "📈", title: "Монотонность", text: "Если одно тело содержится в другом, то его объём не больше." },
-  { icon: "📏", title: "Единица измерения", text: "Объём единичного куба равен 1." }
+  { icon: "🔄", title: "Инвариантность", text: "Объём не меняется при любом движении тела в пространстве." },
+  { icon: "📈", title: "Монотонность", text: "Если одно тело содержится внутри другого, его объём не больше." },
+  { icon: "📏", title: "Единица", text: "Объём единичного куба равен единице." }
 ];
 
 const figures = [
@@ -12,34 +12,15 @@ const figures = [
     name: "Призма",
     formula: "V = S · h",
     theory: [
-      { step: "Шаг 1", text: "Возьмём основание призмы с площадью S." },
-      { step: "Наблюдение", text: "Из каждой точки основания «вытягиваем» отрезок высоты h." },
-      { step: "Вывод", text: "Получаем тело, состоящее из «столбиков» высотой h. Объём каждого столбика = площадь основания × высота." },
-      { step: "Формула", text: "Следовательно, объём призмы V = S · h." }
+      { step: "Шаг 1", text: "Берём основание с площадью S." },
+      { step: "Наблюдение", text: "Из каждой точки основания поднимается яркая точка на высоту h — образуется «столбик»." },
+      { step: "Вывод", text: "Весь объём заполняется такими столбиками. Объём каждого = площадь основания × высота." },
+      { step: "Формула", text: "Следовательно, V = S · h." }
     ],
     tasks: [
-      {
-        type: "choice",
-        question: "Объём прямой призмы равен...",
-        options: ["S · h", "1/3 S · h", "π r² h", "4/3 π R³"],
-        correct: 0,
-        hint: "Вспомни: высота «вытягивается» из каждой точки основания полностью."
-      },
-      {
-        type: "input",
-        question: "Площадь основания призмы 12 см², высота 5 см. Объём?",
-        correct: "60",
-        unit: "см³",
-        hint: "Просто умножь площадь на высоту."
-      },
-      {
-        type: "match",
-        question: "Сопоставь: что на что умножается в формуле призмы?",
-        items: ["Площадь основания", "Высота", "Объём"],
-        targets: ["S", "h", "V = S·h"],
-        correct: [0, 1, 2],
-        hint: "Объём — это произведение площади и высоты."
-      }
+      { type: "choice", question: "Объём прямой призмы равен…", options: ["S · h", "1/3 S · h", "π r² h", "4/3 π R³"], correct: 0, hint: "Высота полностью «вытягивается» из каждой точки основания." },
+      { type: "input", question: "Площадь основания 12 см², высота 5 см. Объём?", correct: "60", unit: "см³", hint: "Умножь площадь на высоту." },
+      { type: "choice", question: "Что показывает анимация призмы?", options: ["Точки поднимаются из основания, заполняя объём", "Сечения плоскостями", "Складывание кубиков", "Оригами"], correct: 0, hint: "Именно подъём точек из каждой точки основания." }
     ]
   },
   {
@@ -47,33 +28,14 @@ const figures = [
     name: "Пирамида",
     formula: "V = (1/3) S · h",
     theory: [
-      { step: "Шаг 1", text: "Рассмотрим призму с основанием S и высотой h." },
-      { step: "Наблюдение", text: "Эту призму можно разделить на три одинаковые пирамиды с тем же основанием и высотой." },
-      { step: "Вывод", text: "Объём каждой пирамиды составляет 1/3 объёма призмы." },
+      { step: "Шаг 1", text: "Рассмотрим призму с тем же основанием и высотой." },
+      { step: "Наблюдение", text: "Три одинаковые пирамиды полностью заполняют такую призму." },
+      { step: "Вывод", text: "Объём одной пирамиды составляет ровно треть объёма призмы." },
       { step: "Формула", text: "V = (1/3) · S · h." }
     ],
     tasks: [
-      {
-        type: "choice",
-        question: "Почему у пирамиды коэффициент 1/3?",
-        options: ["Потому что три пирамиды складываются в призму", "Потому что основание круглое", "Потому что высота меньше", "Случайно"],
-        correct: 0,
-        hint: "Классический способ вывода: три пирамиды = одна призма."
-      },
-      {
-        type: "input",
-        question: "S = 15, h = 9. Объём пирамиды?",
-        correct: "45",
-        unit: "ед.³",
-        hint: "Не забудь разделить на 3: (1/3)·15·9 = 45."
-      },
-      {
-        type: "formula",
-        question: "Собери формулу объёма пирамиды",
-        parts: ["1/3", "S", "·", "h"],
-        correct: "1/3 S · h",
-        hint: "Коэффициент 1/3, затем площадь и высота."
-      }
+      { type: "choice", question: "Почему коэффициент 1/3?", options: ["Три пирамиды складываются в призму", "Основание круглое", "Высота меньше", "Случайно"], correct: 0, hint: "Классический геометрический факт: три пирамиды = одна призма." },
+      { type: "input", question: "S = 15, h = 9. Объём пирамиды?", correct: "45", unit: "", hint: "(1/3)·15·9 = 45." }
     ]
   },
   {
@@ -81,26 +43,14 @@ const figures = [
     name: "Цилиндр",
     formula: "V = π r² · h",
     theory: [
-      { step: "Шаг 1", text: "Основание цилиндра — круг площадью S = π r²." },
-      { step: "Наблюдение", text: "Как и в призме, из каждой точки круга «вытягивается» высота h." },
-      { step: "Вывод", text: "Цилиндр — это «призма» с круглым основанием." },
+      { step: "Шаг 1", text: "Основание — круг площадью S = π r²." },
+      { step: "Наблюдение", text: "Из каждой точки круга поднимается точка на высоту h — точно как в призме." },
+      { step: "Вывод", text: "Цилиндр — «круглая призма»." },
       { step: "Формула", text: "V = S · h = π r² · h." }
     ],
     tasks: [
-      {
-        type: "choice",
-        question: "Цилиндр по объёму аналогичен...",
-        options: ["Призме", "Пирамиде", "Конусу", "Шару"],
-        correct: 0,
-        hint: "Та же идея: площадь основания × высота."
-      },
-      {
-        type: "input",
-        question: "r = 2, h = 7. Объём цилиндра (π≈3.14)?",
-        correct: "87.92",
-        unit: "",
-        hint: "π·4·7 ≈ 3.14·28 = 87.92."
-      }
+      { type: "choice", question: "Цилиндр по объёму аналогичен…", options: ["Призме", "Пирамиде", "Конусу", "Шару"], correct: 0, hint: "Та же идея: площадь основания × высота." },
+      { type: "input", question: "r = 2, h = 7. Объём (π≈3.14)?", correct: "87.92", unit: "", hint: "3.14 · 4 · 7 ≈ 87.92." }
     ]
   },
   {
@@ -114,20 +64,8 @@ const figures = [
       { step: "Формула", text: "V = (1/3) π r² h." }
     ],
     tasks: [
-      {
-        type: "choice",
-        question: "Объём конуса составляет от объёма цилиндра...",
-        options: ["1/3", "1/2", "2/3", "1"],
-        correct: 0,
-        hint: "Как пирамида к призме."
-      },
-      {
-        type: "input",
-        question: "Цилиндр имеет объём 90. Объём вписанного конуса?",
-        correct: "30",
-        unit: "",
-        hint: "Просто раздели на 3."
-      }
+      { type: "choice", question: "Объём конуса составляет от цилиндра…", options: ["1/3", "1/2", "2/3", "1"], correct: 0, hint: "Как пирамида к призме." },
+      { type: "input", question: "Цилиндр имеет объём 90. Объём конуса?", correct: "30", unit: "", hint: "Раздели на 3." }
     ]
   },
   {
@@ -135,26 +73,14 @@ const figures = [
     name: "Шар",
     formula: "V = (4/3) π R³",
     theory: [
-      { step: "Шаг 1", text: "Рассмотрим цилиндр, описанный около шара (высота = диаметр = 2R)." },
-      { step: "Наблюдение", text: "Объём шара составляет 2/3 объёма этого цилиндра." },
-      { step: "Вывод", text: "V_цилиндра = π R² · 2R = 2π R³, значит V_шара = (2/3)·2π R³ = (4/3) π R³." },
+      { step: "Шаг 1", text: "Рассмотрим цилиндр, описанный около шара (высота = 2R)." },
+      { step: "Наблюдение", text: "Объём шара составляет ровно 2/3 объёма этого цилиндра." },
+      { step: "Вывод", text: "V_цилиндра = 2π R³ → V_шара = (2/3)·2π R³ = (4/3) π R³." },
       { step: "Формула", text: "V = (4/3) π R³." }
     ],
     tasks: [
-      {
-        type: "choice",
-        question: "Объём шара относительно описанного цилиндра...",
-        options: ["2/3", "1/3", "1/2", "4/3"],
-        correct: 0,
-        hint: "Классическое соотношение Архимеда: 2/3."
-      },
-      {
-        type: "input",
-        question: "R = 3. Объём шара (π≈3.14)?",
-        correct: "113.04",
-        unit: "",
-        hint: "(4/3)·3.14·27 ≈ 113.04."
-      }
+      { type: "choice", question: "Объём шара относительно описанного цилиндра…", options: ["2/3", "1/3", "1/2", "4/3"], correct: 0, hint: "Соотношение Архимеда: 2/3." },
+      { type: "input", question: "R = 3. Объём шара (π≈3.14)?", correct: "113.04", unit: "", hint: "(4/3)·3.14·27 ≈ 113.04." }
     ]
   },
   {
@@ -162,19 +88,13 @@ const figures = [
     name: "Принцип Кавальери",
     formula: "Равные сечения → равные объёмы",
     theory: [
-      { step: "Шаг 1", text: "Два тела имеют равные высоты." },
+      { step: "Шаг 1", text: "Два тела имеют одинаковую высоту." },
       { step: "Наблюдение", text: "На каждой высоте площади сечений параллельными плоскостями равны." },
-      { step: "Вывод", text: "Тогда объёмы тел равны (принцип Кавальери)." },
-      { step: "Применение", text: "Это позволяет обосновывать равенство объёмов без прямого вычисления." }
+      { step: "Вывод", text: "Тогда объёмы тел равны." },
+      { step: "Применение", text: "Позволяет сравнивать объёмы без прямого вычисления." }
     ],
     tasks: [
-      {
-        type: "choice",
-        question: "Принцип Кавальери утверждает, что...",
-        options: ["Равные площади сечений на всех высотах → равные объёмы", "Объёмы всегда равны", "Только для шара", "Ничего"],
-        correct: 0,
-        hint: "Ключ — равные сечения на каждой высоте."
-      }
+      { type: "choice", question: "Принцип Кавальери утверждает…", options: ["Равные площади сечений на всех высотах → равные объёмы", "Объёмы всегда равны", "Только для шара", "Ничего"], correct: 0, hint: "Ключ — равные сечения на каждой высоте." }
     ]
   }
 ];
@@ -183,8 +103,7 @@ const figures = [
 let currentFigure = 0;
 let animProgress = 0;
 let animRunning = true;
-let showLayers = false;
-let animStep = 0;
+let pointDensity = 1;
 let solvedTasks = new Set();
 const canvas = document.getElementById("animation-canvas");
 const ctx = canvas.getContext("2d");
@@ -196,17 +115,18 @@ function init() {
   renderSummary();
   switchFigure(0);
   requestAnimationFrame(animationLoop);
+
+  document.getElementById("start-btn").onclick = () => document.getElementById("intro").scrollIntoView({behavior:"smooth"});
   document.getElementById("btn-pause").onclick = () => { animRunning = !animRunning; };
-  document.getElementById("btn-replay").onclick = () => { animProgress = 0; animStep = 0; animRunning = true; };
-  document.getElementById("btn-layers").onclick = (e) => { showLayers = !showLayers; e.target.classList.toggle("active", showLayers); };
-  document.getElementById("btn-next").onclick = () => { animStep = Math.min(animStep + 1, 4); animProgress = 0; };
+  document.getElementById("btn-replay").onclick = () => { animProgress = 0; animRunning = true; };
+  document.getElementById("btn-layers").onclick = (e) => { pointDensity = pointDensity === 1 ? 2 : 1; e.target.classList.toggle("active", pointDensity > 1); };
+  document.getElementById("btn-next").onclick = () => { animProgress = Math.min(animProgress + 0.25, 1); };
   document.getElementById("btn-reset").onclick = resetProgress;
   updateProgress();
 }
 
 function renderProperties() {
-  const container = document.getElementById("property-cards");
-  container.innerHTML = properties.map(p => `
+  document.getElementById("property-cards").innerHTML = properties.map(p => `
     <div class="card">
       <div class="icon">${p.icon}</div>
       <h3>${p.title}</h3>
@@ -216,8 +136,7 @@ function renderProperties() {
 }
 
 function renderTabs() {
-  const container = document.getElementById("figure-tabs");
-  container.innerHTML = figures.map((f, i) => `
+  document.getElementById("figure-tabs").innerHTML = figures.map((f, i) => `
     <button class="tab ${i===0?'active':''}" onclick="switchFigure(${i})">${f.name}</button>
   `).join("");
 }
@@ -226,7 +145,7 @@ function switchFigure(index) {
   currentFigure = index;
   document.querySelectorAll(".tab").forEach((t, i) => t.classList.toggle("active", i === index));
   animProgress = 0;
-  animStep = 0;
+  animRunning = true;
   renderTheory();
   renderTasks();
 }
@@ -234,7 +153,7 @@ function switchFigure(index) {
 function renderTheory() {
   const f = figures[currentFigure];
   document.getElementById("theory-container").innerHTML = `
-    <h3>${f.name}</h3>
+    <h3 style="margin-bottom:1rem;">${f.name}</h3>
     ${f.theory.map(t => `<div class="theory-step"><strong>${t.step}:</strong> ${t.text}</div>`).join("")}
     <div class="formula">${f.formula}</div>
   `;
@@ -243,9 +162,8 @@ function renderTheory() {
 function renderTasks() {
   const f = figures[currentFigure];
   const container = document.getElementById("tasks-container");
-  container.innerHTML = "<h3 style='margin-top:1.5rem;'>Задания</h3>" + 
+  container.innerHTML = `<h3 style="margin:1.5rem 0 1rem;">Задания</h3>` +
     f.tasks.map((task, ti) => renderTask(task, currentFigure, ti)).join("");
-  attachTaskHandlers();
 }
 
 function renderTask(task, fi, ti) {
@@ -253,22 +171,15 @@ function renderTask(task, fi, ti) {
   const solved = solvedTasks.has(id);
   let html = `<div class="task ${solved?'correct':''}" id="${id}"><p><strong>${task.question}</strong></p>`;
   if (task.type === "choice") {
-    html += `<div class="task-options">` + task.options.map((opt, oi) => 
+    html += `<div class="task-options">` + task.options.map((opt, oi) =>
       `<button onclick="checkChoice(${fi},${ti},${oi})" ${solved?'disabled':''}>${opt}</button>`
     ).join("") + `</div>`;
   } else if (task.type === "input") {
-    html += `<input type="text" id="input-${id}" placeholder="Ответ" ${solved?'disabled':''}> <span>${task.unit||''}</span>
-             <button onclick="checkInput(${fi},${ti})" ${solved?'disabled':''}>Проверить</button>`;
-  } else if (task.type === "formula") {
-    html += `<div>Перетащи части: <div class="drag-area" id="drag-${id}">` +
-      task.parts.map(p => `<span class="drag-item" draggable="true">${p}</span>`).join("") +
-      `</div> <div class="drop-zone" id="drop-${id}" ondrop="drop(event)" ondragover="allowDrop(event)">Собери здесь</div></div>
-      <button onclick="checkFormula(${fi},${ti})">Проверить</button>`;
-  } else if (task.type === "match") {
-    html += `<p>Сопоставь элементы (упрощённо — выбери порядок):</p>
-             <div class="task-options">` + task.items.map((item, ii) => 
-      `<label><input type="checkbox" value="${ii}"> ${item}</label>`
-    ).join("") + `</div><button onclick="checkMatch(${fi},${ti})">Проверить</button>`;
+    html += `<div style="display:flex;gap:0.5rem;align-items:center;margin-top:0.5rem;">
+      <input type="text" id="input-${id}" placeholder="Ответ" style="flex:1;padding:0.5rem;border-radius:8px;border:1px solid #343d3b;background:#1b2020;color:#f0f1e9;" ${solved?'disabled':''}>
+      <span>${task.unit||''}</span>
+      <button class="ghost" onclick="checkInput(${fi},${ti})" ${solved?'disabled':''}>Проверить</button>
+    </div>`;
   }
   html += `<div class="feedback" id="fb-${id}"></div></div>`;
   return html;
@@ -281,7 +192,7 @@ function checkChoice(fi, ti, oi) {
   const fb = document.getElementById(`fb-${id}`);
   if (oi === task.correct) {
     el.classList.add("correct");
-    fb.innerHTML = `<span class="feedback correct">Верно! ${task.hint || ''}</span>`;
+    fb.innerHTML = `<span class="feedback correct">Верно! ${task.hint || ""}</span>`;
     solvedTasks.add(id);
   } else {
     el.classList.add("incorrect");
@@ -297,7 +208,9 @@ function checkInput(fi, ti) {
   const fb = document.getElementById(`fb-${id}`);
   const el = document.getElementById(id);
   const val = input.value.trim().replace(",", ".");
-  if (val === task.correct || Math.abs(parseFloat(val) - parseFloat(task.correct)) < 0.1) {
+  const num = parseFloat(val);
+  const correctNum = parseFloat(task.correct);
+  if (val === task.correct || ( !isNaN(num) && Math.abs(num - correctNum) < 0.15 )) {
     el.classList.add("correct");
     fb.innerHTML = `<span class="feedback correct">Верно!</span>`;
     solvedTasks.add(id);
@@ -308,51 +221,13 @@ function checkInput(fi, ti) {
   updateProgress();
 }
 
-function checkFormula(fi, ti) {
-  // Упрощённая проверка
-  const id = `task-${fi}-${ti}`;
-  const drop = document.getElementById(`drop-${id}`);
-  const fb = document.getElementById(`fb-${id}`);
-  const el = document.getElementById(id);
-  if (drop.textContent.includes("1/3") && drop.textContent.includes("S")) {
-    el.classList.add("correct");
-    fb.innerHTML = `<span class="feedback correct">Отлично! Формула собрана.</span>`;
-    solvedTasks.add(id);
-  } else {
-    fb.innerHTML = `<span class="feedback incorrect">Попробуй ещё раз. ${figures[fi].tasks[ti].hint}</span>`;
-  }
-  updateProgress();
-}
-
-function checkMatch(fi, ti) {
-  const id = `task-${fi}-${ti}`;
-  const el = document.getElementById(id);
-  const fb = document.getElementById(`fb-${id}`);
-  el.classList.add("correct");
-  fb.innerHTML = `<span class="feedback correct">Принято! Объём = площадь основания × высота.</span>`;
-  solvedTasks.add(id);
-  updateProgress();
-}
-
-function allowDrop(ev) { ev.preventDefault(); }
-function drop(ev) {
-  ev.preventDefault();
-  const data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.querySelector(`[data-item="${data}"]`) || document.createTextNode(data));
-}
-
-function attachTaskHandlers() {
-  document.querySelectorAll(".drag-item").forEach((item, i) => {
-    item.setAttribute("data-item", i);
-    item.ondragstart = (e) => e.dataTransfer.setData("text", item.textContent);
-  });
-}
-
 function updateProgress() {
   const total = figures.reduce((s, f) => s + f.tasks.length, 0);
   const done = solvedTasks.size;
-  document.getElementById("progress-fill").style.width = (done / total * 100) + "%";
-  document.getElementById("progress-text").textContent = `Прогресс: ${done} из ${total} заданий решено верно`;
+  const percent = total ? Math.round(done / total * 100) : 0;
+  document.getElementById("progress-bar").value = percent;
+  document.getElementById("progress-text").textContent = `Прогресс: ${done} из ${total} заданий`;
+  document.getElementById("percent").textContent = percent + "%";
 }
 
 function resetProgress() {
@@ -362,8 +237,7 @@ function resetProgress() {
 }
 
 function renderSummary() {
-  const container = document.getElementById("summary-table");
-  container.innerHTML = `
+  document.getElementById("summary-table").innerHTML = `
     <table>
       <thead><tr><th>Фигура</th><th>Формула</th></tr></thead>
       <tbody>
@@ -373,137 +247,250 @@ function renderSummary() {
   `;
 }
 
-// ========== АНИМАЦИИ ==========
+// ========== 3D-ПРОЕКЦИЯ И АНИМАЦИЯ ТОЧЕК ==========
+const ISO = Math.PI / 6;
+function project(x, y, z) {
+  // Изометрическая проекция (y — высота вверх)
+  const px = (x - z) * Math.cos(ISO);
+  const py = y + (x + z) * Math.sin(ISO) * 0.5;
+  return { x: px, y: -py }; // инвертируем Y для canvas
+}
+
 function animationLoop() {
   if (animRunning) {
-    animProgress = Math.min(animProgress + 0.005, 1);
+    animProgress = Math.min(animProgress + 0.004, 1);
   }
   drawAnimation();
   requestAnimationFrame(animationLoop);
 }
 
 function drawAnimation() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const f = figures[currentFigure];
-  ctx.fillStyle = "#1a9bc7";
-  ctx.font = "16px system-ui";
-  ctx.fillText(f.name + " — вывод формулы", 20, 30);
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = "#0e1212";
+  ctx.fillRect(0, 0, w, h);
 
-  // Простые наглядные рисунки в зависимости от фигуры
-  if (f.id === "prism") {
-    drawPrism();
-  } else if (f.id === "pyramid") {
-    drawPyramid();
-  } else if (f.id === "cylinder") {
-    drawCylinder();
-  } else if (f.id === "cone") {
-    drawCone();
-  } else if (f.id === "sphere") {
-    drawSphere();
+  ctx.save();
+  ctx.translate(w / 2, h * 0.62);
+
+  const f = figures[currentFigure];
+  drawFigure(f.id);
+
+  ctx.restore();
+
+  // Подпись
+  ctx.fillStyle = "#d5f887";
+  ctx.font = "600 15px system-ui";
+  ctx.textAlign = "center";
+  ctx.fillText(f.name + " — точки поднимаются из основания", w / 2, 36);
+}
+
+function drawFigure(id) {
+  const scale = 90;
+  const hMax = 2.2;
+  const progress = animProgress;
+
+  if (id === "prism") {
+    drawBaseAndPoints("rect", scale, hMax, progress);
+    drawPrismWire(scale, hMax * progress);
+  } else if (id === "cylinder") {
+    drawBaseAndPoints("circle", scale, hMax, progress);
+    drawCylinderWire(scale, hMax * progress);
+  } else if (id === "pyramid") {
+    drawBaseAndPoints("rect", scale, hMax, progress, true);
+    drawPyramidWire(scale, hMax * progress);
+  } else if (id === "cone") {
+    drawBaseAndPoints("circle", scale, hMax, progress, true);
+    drawConeWire(scale, hMax * progress);
+  } else if (id === "sphere") {
+    drawSphereWithPoints(scale * 0.9, progress);
   } else {
-    drawCavalieri();
+    drawCavalieriDemo(scale);
   }
 }
 
-function drawPrism() {
-  const h = 200 * animProgress;
-  ctx.strokeStyle = "#1a9bc7";
-  ctx.lineWidth = 2;
+function drawBaseAndPoints(type, scale, hMax, progress, converge = false) {
+  const count = Math.floor(180 * pointDensity);
+  ctx.globalAlpha = 0.9;
+
+  for (let i = 0; i < count; i++) {
+    let bx, bz;
+    if (type === "rect") {
+      bx = (Math.random() - 0.5) * 2;
+      bz = (Math.random() - 0.5) * 1.4;
+    } else {
+      const a = Math.random() * Math.PI * 2;
+      const r = Math.sqrt(Math.random());
+      bx = Math.cos(a) * r;
+      bz = Math.sin(a) * r * 0.9;
+    }
+
+    const rise = progress;
+    let py = rise * hMax;
+    if (converge) {
+      // Для пирамиды/конуса точки сходятся к вершине
+      const t = rise;
+      bx *= (1 - t);
+      bz *= (1 - t);
+      py = t * hMax;
+    }
+
+    const p = project(bx * scale, py * scale, bz * scale);
+    const alpha = 0.4 + rise * 0.6;
+    ctx.fillStyle = `rgba(213,248,135,${alpha})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, converge ? 2.2 : 2.6, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Лёгкое свечение
+    if (rise > 0.3) {
+      ctx.fillStyle = `rgba(213,248,135,${alpha * 0.25})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+
+function drawPrismWire(scale, h) {
+  const pts = [
+    [-1, 0, -0.7], [1, 0, -0.7], [1, 0, 0.7], [-1, 0, 0.7],
+    [-1, h, -0.7], [1, h, -0.7], [1, h, 0.7], [-1, h, 0.7]
+  ].map(p => project(p[0]*scale, p[1]*scale, p[2]*scale));
+
+  ctx.strokeStyle = "rgba(213,248,135,0.7)";
+  ctx.lineWidth = 1.5;
   // Основание
   ctx.beginPath();
-  ctx.rect(150, 250, 200, 40);
+  ctx.moveTo(pts[0].x, pts[0].y);
+  for (let i = 1; i < 4; i++) ctx.lineTo(pts[i].x, pts[i].y);
+  ctx.closePath();
   ctx.stroke();
-  // Высота
-  if (animProgress > 0.2) {
+  // Верх
+  if (h > 0.1) {
     ctx.beginPath();
-    ctx.moveTo(150, 250); ctx.lineTo(150, 250 - h);
-    ctx.moveTo(350, 250); ctx.lineTo(350, 250 - h);
+    ctx.moveTo(pts[4].x, pts[4].y);
+    for (let i = 5; i < 8; i++) ctx.lineTo(pts[i].x, pts[i].y);
+    ctx.closePath();
     ctx.stroke();
-  }
-  if (showLayers && animProgress > 0.5) {
-    for (let i = 0; i < 5; i++) {
-      ctx.globalAlpha = 0.3;
-      ctx.fillStyle = "#1a9bc7";
-      ctx.fillRect(155, 250 - i*30, 190, 25);
+    // Рёбра
+    for (let i = 0; i < 4; i++) {
+      ctx.beginPath();
+      ctx.moveTo(pts[i].x, pts[i].y);
+      ctx.lineTo(pts[i+4].x, pts[i+4].y);
+      ctx.stroke();
     }
-    ctx.globalAlpha = 1;
   }
-  ctx.fillText("Основание S, высота h → V = S·h", 120, 320);
 }
 
-function drawPyramid() {
-  ctx.strokeStyle = "#1a9bc7";
-  // Призма
-  ctx.strokeRect(100, 200, 300, 100);
-  // Три пирамиды (упрощённо)
-  if (animProgress > 0.3) {
-    ctx.beginPath();
-    ctx.moveTo(100, 200); ctx.lineTo(200, 100); ctx.lineTo(200, 300); ctx.closePath();
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(200, 100); ctx.lineTo(300, 200); ctx.lineTo(200, 300); ctx.closePath();
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(300, 200); ctx.lineTo(400, 200); ctx.lineTo(300, 300); ctx.closePath();
-    ctx.stroke();
-  }
-  ctx.fillText("3 пирамиды = 1 призма → V = 1/3 S·h", 100, 330);
-}
-
-function drawCylinder() {
-  const h = 180 * animProgress;
-  ctx.strokeStyle = "#1a9bc7";
+function drawCylinderWire(scale, h) {
+  ctx.strokeStyle = "rgba(213,248,135,0.65)";
+  ctx.lineWidth = 1.5;
+  // Нижнее основание
   ctx.beginPath();
-  ctx.ellipse(300, 250, 80, 20, 0, 0, Math.PI*2);
+  for (let a = 0; a <= Math.PI * 2; a += 0.15) {
+    const p = project(Math.cos(a)*scale, 0, Math.sin(a)*scale*0.85);
+    if (a === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+  }
   ctx.stroke();
-  if (animProgress > 0.2) {
+  if (h > 0.1) {
     ctx.beginPath();
-    ctx.moveTo(220, 250); ctx.lineTo(220, 250 - h);
-    ctx.moveTo(380, 250); ctx.lineTo(380, 250 - h);
+    for (let a = 0; a <= Math.PI * 2; a += 0.15) {
+      const p = project(Math.cos(a)*scale, h*scale, Math.sin(a)*scale*0.85);
+      if (a === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+    }
     ctx.stroke();
-    ctx.beginPath();
-    ctx.ellipse(300, 250 - h, 80, 20, 0, 0, Math.PI*2);
-    ctx.stroke();
+    // Боковые
+    for (let a of [0, Math.PI]) {
+      const p1 = project(Math.cos(a)*scale, 0, Math.sin(a)*scale*0.85);
+      const p2 = project(Math.cos(a)*scale, h*scale, Math.sin(a)*scale*0.85);
+      ctx.beginPath();
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.stroke();
+    }
   }
-  ctx.fillText("Круглое основание × высота → V = πr²h", 140, 320);
 }
 
-function drawCone() {
-  ctx.strokeStyle = "#1a9bc7";
-  // Цилиндр
-  ctx.strokeRect(200, 150, 200, 150);
-  // Конус
-  if (animProgress > 0.4) {
-    ctx.beginPath();
-    ctx.moveTo(200, 300); ctx.lineTo(300, 150); ctx.lineTo(400, 300); ctx.closePath();
-    ctx.stroke();
-  }
-  ctx.fillText("Конус = 1/3 цилиндра", 180, 330);
-}
-
-function drawSphere() {
-  ctx.strokeStyle = "#1a9bc7";
-  // Цилиндр
+function drawPyramidWire(scale, h) {
+  const base = [[-1,0,-0.7],[1,0,-0.7],[1,0,0.7],[-1,0,0.7]].map(p => project(p[0]*scale, 0, p[2]*scale));
+  const apex = project(0, h*scale, 0);
+  ctx.strokeStyle = "rgba(213,248,135,0.7)";
+  ctx.lineWidth = 1.5;
   ctx.beginPath();
-  ctx.rect(220, 120, 160, 180);
+  ctx.moveTo(base[0].x, base[0].y);
+  base.forEach(p => ctx.lineTo(p.x, p.y));
+  ctx.closePath();
   ctx.stroke();
-  // Шар
-  ctx.beginPath();
-  ctx.arc(300, 210, 80 * animProgress, 0, Math.PI*2);
-  ctx.stroke();
-  ctx.fillText("Шар = 2/3 описанного цилиндра", 140, 330);
-}
-
-function drawCavalieri() {
-  ctx.strokeStyle = "#1a9bc7";
-  // Две фигуры с равными сечениями
-  for (let y = 100; y < 280; y += 20) {
-    const w = 60 + Math.sin(y/30) * 20;
-    ctx.strokeRect(150, y, w, 15);
-    ctx.strokeRect(350, y, w, 15);
+  if (h > 0.1) {
+    base.forEach(p => {
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(apex.x, apex.y);
+      ctx.stroke();
+    });
   }
-  ctx.fillText("Равные сечения → равные объёмы", 150, 320);
 }
 
-// Запуск
+function drawConeWire(scale, h) {
+  ctx.strokeStyle = "rgba(213,248,135,0.65)";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let a = 0; a <= Math.PI * 2; a += 0.15) {
+    const p = project(Math.cos(a)*scale, 0, Math.sin(a)*scale*0.85);
+    if (a === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+  }
+  ctx.stroke();
+  if (h > 0.1) {
+    const apex = project(0, h*scale, 0);
+    for (let a of [0, Math.PI * 0.7, Math.PI * 1.4]) {
+      const p = project(Math.cos(a)*scale, 0, Math.sin(a)*scale*0.85);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(apex.x, apex.y);
+      ctx.stroke();
+    }
+  }
+}
+
+function drawSphereWithPoints(scale, progress) {
+  const count = Math.floor(220 * pointDensity);
+  ctx.globalAlpha = 0.85;
+  for (let i = 0; i < count; i++) {
+    const phi = Math.random() * Math.PI;
+    const theta = Math.random() * Math.PI * 2;
+    const r = progress;
+    const x = Math.sin(phi) * Math.cos(theta) * r;
+    const y = Math.cos(phi) * r;
+    const z = Math.sin(phi) * Math.sin(theta) * r;
+    const p = project(x * scale, y * scale * 0.9, z * scale);
+    ctx.fillStyle = `rgba(213,248,135,${0.5 + progress * 0.5})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 2.4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  // Контур шара
+  ctx.strokeStyle = "rgba(213,248,135,0.5)";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.ellipse(0, 0, scale * progress, scale * progress * 0.7, 0, 0, Math.PI * 2);
+  ctx.stroke();
+}
+
+function drawCavalieriDemo(scale) {
+  ctx.fillStyle = "#d5f887";
+  ctx.font = "14px system-ui";
+  ctx.textAlign = "center";
+  ctx.fillText("Два тела с равными сечениями на каждой высоте", 0, -scale * 2.2);
+  // Упрощённая визуализация двух «столбиков» с одинаковыми площадями
+  for (let y = 0; y < 8; y++) {
+    const w = 40 + Math.sin(y * 0.7) * 12;
+    ctx.fillStyle = `rgba(213,248,135,${0.4 + y * 0.05})`;
+    ctx.fillRect(-120 - w/2, -y * 18, w, 14);
+    ctx.fillRect(80 - w/2, -y * 18, w, 14);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", init);

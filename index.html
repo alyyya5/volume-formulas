@@ -1,84 +1,662 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#121212">
-  <title>Формулы объёма: увидеть, понять, применить</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Формулы объёма: увидеть, понять, применить</title>
+<style>
+:root {
+  --bg: #0f1115;
+  --surface: #1a1d24;
+  --surface-2: #22262e;
+  --text: #e8eaed;
+  --muted: #9aa0a6;
+  --accent: #5eead4;
+  --accent-dark: #2dd4bf;
+  --red: #f87171;
+  --border: #2d323b;
+  --success: #4ade80;
+  --error: #f87171;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 0 1.2rem; }
+.logo { font-weight: 700; font-size: 1.25rem; color: var(--accent); }
+nav { display: flex; gap: 1.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+nav button {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.4rem 0;
+  transition: color 0.2s;
+}
+nav button.active, nav button:hover { color: var(--accent); }
+
+main { padding: 2rem 0 4rem; }
+.panel {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.panel.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h2 { font-size: 1.6rem; margin-bottom: 1.2rem; color: var(--accent); }
+.figure-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.2rem;
+}
+@media (max-width: 800px) {
+  .figure-layout { grid-template-columns: 1fr; }
+}
+canvas {
+  width: 100%;
+  background: #111318;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.controls {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-top: 0.8rem;
+  flex-wrap: wrap;
+}
+button.btn {
+  background: var(--accent);
+  color: #0f1115;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button.btn:hover { background: var(--accent-dark); }
+button.btn-sec {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button.btn-sec:disabled { opacity: 0.45; cursor: default; }
+.explanation {
+  font-size: 1.05rem;
+  min-height: 110px;
+  margin-bottom: 1rem;
+}
+.formula {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: center;
+  padding: 0.8rem;
+  background: #13221e;
+  border-radius: 10px;
+  border: 1px solid #2a4a44;
+}
+.step-badge {
+  display: inline-block;
+  background: #1e2a28;
+  color: var(--accent);
+  font-size: 0.8rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  margin-bottom: 0.8rem;
+}
+
+.practice-grid {
+  display: grid;
+  gap: 1rem;
+}
+.task {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+}
+.task.correct { border-color: var(--success); }
+.task.incorrect { border-color: var(--error); }
+.task button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  cursor: pointer;
+}
+.task button:hover { background: #2a2f38; }
+.feedback { margin-top: 0.6rem; font-weight: 500; }
+.feedback.correct { color: var(--success); }
+.feedback.incorrect { color: var(--error); }
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.summary-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+}
+.summary-card .fig-name { font-weight: 600; margin-bottom: 0.4rem; }
+.summary-card .fig-formula { color: var(--accent); font-weight: 700; font-size: 1.1rem; }
+</style>
 </head>
 <body>
-  <header class="header">
-    <div class="wrap header-inner">
-      <div class="brand"><span class="brand-icon">◈</span> Формулы объёма</div>
-      <nav>
-        <a href="#hero">Главная</a>
-        <a href="#intro">Свойства</a>
-        <a href="#figures">Фигуры</a>
-        <a href="#summary">Итог</a>
-      </nav>
+<header>
+  <div class="container">
+    <div class="logo">Формулы объёма</div>
+    <nav>
+      <button class="nav-btn active" data-panel="prism">Призма</button>
+      <button class="nav-btn" data-panel="cylinder">Цилиндр</button>
+      <button class="nav-btn" data-panel="pyramid">Пирамида</button>
+      <button class="nav-btn" data-panel="cone">Конус</button>
+      <button class="nav-btn" data-panel="sphere">Шар</button>
+      <button class="nav-btn" data-panel="practice">Проверь себя</button>
+      <button class="nav-btn" data-panel="summary">Итог</button>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <!-- Panels will be shown/hidden by JS -->
+  <div id="prism" class="panel active">
+    <h2>Призма</h2>
+    <div class="figure-layout">
+      <div>
+        <canvas id="canvas-prism" width="620" height="380"></canvas>
+        <div class="controls">
+          <button class="btn-sec" onclick="prevStep('prism')">← Шаг назад</button>
+          <button class="btn" onclick="nextStep('prism')">Следующий шаг →</button>
+          <button class="btn-sec" onclick="resetStep('prism')">С начала</button>
+        </div>
+      </div>
+      <div>
+        <div class="step-badge" id="step-badge-prism">Шаг 1 из 4</div>
+        <div class="explanation" id="expl-prism"></div>
+        <div class="formula" id="formula-prism"></div>
+      </div>
     </div>
-  </header>
+  </div>
 
-  <main>
-    <section id="hero" class="wrap">
-      <div class="hero-content">
-        <p class="kicker">СТЕРЕОМЕТРИЯ · ОБЪЁМ</p>
-        <h1>Формулы<br>объёма</h1>
-        <p class="lead">Не запоминай формулу — пойми, откуда она берётся. Смотри по шагам, как точки основания заполняют пространство.</p>
-        <button class="primary" id="start-btn">Начать изучение</button>
-      </div>
-      <div class="hero-doodle" id="hero-canvas-wrap">
-        <canvas id="hero-canvas" width="420" height="320"></canvas>
-      </div>
-    </section>
-
-    <section id="intro" class="wrap">
-      <h2>Что такое объём?</h2>
-      <p class="section-lead">Объём — мера пространства. Его свойства позволяют выводить формулы наглядно.</p>
-      <div class="cards" id="property-cards"></div>
-    </section>
-
-    <section id="figures" class="wrap">
-      <h2>Вывод формул по шагам</h2>
-      <div class="tabs" id="figure-tabs"></div>
-
-      <div class="figure-slide">
-        <div class="slide-visual">
-          <div class="canvas-wrap">
-            <canvas id="animation-canvas" width="700" height="460"></canvas>
-          </div>
-          <div class="controls">
-            <button id="btn-prev" class="ghost">← Предыдущий шаг</button>
-            <button id="btn-next" class="primary">Следующий шаг →</button>
-            <button id="btn-replay" class="ghost">С начала</button>
-          </div>
-        </div>
-        <div class="slide-text">
-          <div id="step-indicator" class="step-badge">Шаг 1 из 4</div>
-          <div id="step-explanation" class="explanation"></div>
-          <div id="formula-box" class="formula"></div>
+  <div id="cylinder" class="panel">
+    <h2>Цилиндр</h2>
+    <div class="figure-layout">
+      <div>
+        <canvas id="canvas-cylinder" width="620" height="380"></canvas>
+        <div class="controls">
+          <button class="btn-sec" onclick="prevStep('cylinder')">← Шаг назад</button>
+          <button class="btn" onclick="nextStep('cylinder')">Следующий шаг →</button>
+          <button class="btn-sec" onclick="resetStep('cylinder')">С начала</button>
         </div>
       </div>
-
-      <div id="tasks-container" class="tasks-block"></div>
-    </section>
-
-    <section id="summary" class="wrap">
-      <h2>Сводная таблица</h2>
-      <div id="summary-table"></div>
-      <div class="progress-block">
-        <div class="metric"><span id="progress-text">Прогресс: 0 из 0</span><span id="percent">0%</span></div>
-        <progress id="progress-bar" value="0" max="100"></progress>
-        <button class="primary" id="btn-reset" style="margin-top:1.5rem;">Пройти всё заново</button>
+      <div>
+        <div class="step-badge" id="step-badge-cylinder">Шаг 1 из 4</div>
+        <div class="explanation" id="expl-cylinder"></div>
+        <div class="formula" id="formula-cylinder"></div>
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
 
-  <footer class="footer wrap">
-    <span>Образовательный проект · работает офлайн после первой загрузки</span>
-  </footer>
+  <div id="pyramid" class="panel">
+    <h2>Пирамида</h2>
+    <div class="figure-layout">
+      <div>
+        <canvas id="canvas-pyramid" width="620" height="380"></canvas>
+        <div class="controls">
+          <button class="btn-sec" onclick="prevStep('pyramid')">← Шаг назад</button>
+          <button class="btn" onclick="nextStep('pyramid')">Следующий шаг →</button>
+          <button class="btn-sec" onclick="resetStep('pyramid')">С начала</button>
+        </div>
+      </div>
+      <div>
+        <div class="step-badge" id="step-badge-pyramid">Шаг 1 из 4</div>
+        <div class="explanation" id="expl-pyramid"></div>
+        <div class="formula" id="formula-pyramid"></div>
+      </div>
+    </div>
+  </div>
 
-  <script src="script.js"></script>
+  <div id="cone" class="panel">
+    <h2>Конус</h2>
+    <div class="figure-layout">
+      <div>
+        <canvas id="canvas-cone" width="620" height="380"></canvas>
+        <div class="controls">
+          <button class="btn-sec" onclick="prevStep('cone')">← Шаг назад</button>
+          <button class="btn" onclick="nextStep('cone')">Следующий шаг →</button>
+          <button class="btn-sec" onclick="resetStep('cone')">С начала</button>
+        </div>
+      </div>
+      <div>
+        <div class="step-badge" id="step-badge-cone">Шаг 1 из 4</div>
+        <div class="explanation" id="expl-cone"></div>
+        <div class="formula" id="formula-cone"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sphere" class="panel">
+    <h2>Шар</h2>
+    <div class="figure-layout">
+      <div>
+        <canvas id="canvas-sphere" width="620" height="380"></canvas>
+        <div class="controls">
+          <button class="btn-sec" onclick="prevStep('sphere')">← Шаг назад</button>
+          <button class="btn" onclick="nextStep('sphere')">Следующий шаг →</button>
+          <button class="btn-sec" onclick="resetStep('sphere')">С начала</button>
+        </div>
+      </div>
+      <div>
+        <div class="step-badge" id="step-badge-sphere">Шаг 1 из 4</div>
+        <div class="explanation" id="expl-sphere"></div>
+        <div class="formula" id="formula-sphere"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="practice" class="panel">
+    <h2>Проверь себя</h2>
+    <p style="margin-bottom:1rem; color:var(--muted);">Реши несколько задач на объём разных фигур.</p>
+    <div class="practice-grid" id="practice-container"></div>
+  </div>
+
+  <div id="summary" class="panel">
+    <h2>Итог: фигуры и формулы</h2>
+    <div class="summary-grid" id="summary-container"></div>
+  </div>
+</main>
+
+<script>
+const figuresData = {
+  prism: {
+    name: "Призма",
+    formula: "V = S · h",
+    steps: [
+      "На основании призмы появляется одна яркая точка.",
+      "Из этой точки поднимается высота h. Образуется столбик, который проходит через всю высоту призмы.",
+      "Такие точки появляются по очереди по всему основанию. Каждый столбик занимает своё место в объёме.",
+      "Когда все точки основания подняты на высоту h, они полностью заполняют призму. Поэтому объём равен площади основания, умноженной на высоту."
+    ]
+  },
+  cylinder: {
+    name: "Цилиндр",
+    formula: "V = π r² · h",
+    steps: [
+      "На круглом основании цилиндра появляется красная точка.",
+      "Из неё поднимается высота h. Этот столбик существует на всей высоте цилиндра.",
+      "Так происходит с каждой точкой основания — столбики появляются по очереди.",
+      "Все точки основания, поднятые на высоту h, заполняют цилиндр. Поэтому V = π r² · h."
+    ]
+  },
+  pyramid: {
+    name: "Пирамида",
+    formula: "V = (1/3) S · h",
+    steps: [
+      "Рассмотрим призму с тем же основанием и высотой.",
+      "Эту призму можно разделить на три одинаковые пирамиды с тем же основанием и высотой.",
+      "Каждая пирамида занимает ровно треть объёма призмы.",
+      "Поэтому объём пирамиды равен одной трети произведения площади основания на высоту."
+    ]
+  },
+  cone: {
+    name: "Конус",
+    formula: "V = (1/3) π r² · h",
+    steps: [
+      "Конус связан с цилиндром так же, как пирамида с призмой.",
+      "Три конуса с тем же основанием и высотой полностью заполняют цилиндр.",
+      "Объём одного конуса составляет 1/3 объёма цилиндра.",
+      "Поэтому V = (1/3) π r² · h."
+    ]
+  },
+  sphere: {
+    name: "Шар",
+    formula: "V = (4/3) π R³",
+    steps: [
+      "Рассмотрим цилиндр, описанный около шара: высота цилиндра равна диаметру шара = 2R.",
+      "Объём такого цилиндра равен π R² · 2R = 2π R³.",
+      "Объём шара составляет ровно 2/3 объёма описанного цилиндра (открытие Архимеда).",
+      "Следовательно, V = (2/3) · 2π R³ = (4/3) π R³."
+    ]
+  }
+};
+
+const practiceTasks = [
+  { q: "Прямая призма: площадь основания 15 см², высота 8 см. Объём?", options: ["120 см³", "23 см³", "1200 см³"], correct: 0, hint: "V = S · h = 15 · 8 = 120." },
+  { q: "Цилиндр: r = 3, h = 10 (π ≈ 3.14). Объём примерно?", options: ["282.6", "94.2", "188.4"], correct: 0, hint: "π r² h ≈ 3.14 · 9 · 10 = 282.6." },
+  { q: "Пирамида: S = 24, h = 9. Объём?", options: ["72", "216", "24"], correct: 0, hint: "(1/3) · 24 · 9 = 72." },
+  { q: "Конус: объём цилиндра с теми же r и h равен 90. Объём конуса?", options: ["30", "45", "90"], correct: 0, hint: "Конус = 1/3 цилиндра." },
+  { q: "Шар: R = 3 (π ≈ 3.14). Объём примерно?", options: ["113", "84.8", "28.3"], correct: 0, hint: "(4/3) π R³ ≈ 4/3 · 3.14 · 27 ≈ 113." }
+];
+
+let currentSteps = { prism: 0, cylinder: 0, pyramid: 0, cone: 0, sphere: 0 };
+let solved = new Set();
+
+function switchPanel(id) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.panel === id));
+  if (["prism","cylinder","pyramid","cone","sphere"].includes(id)) draw(id);
+}
+
+document.querySelectorAll(".nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => switchPanel(btn.dataset.panel));
+});
+
+function nextStep(fig) {
+  const max = figuresData[fig].steps.length - 1;
+  if (currentSteps[fig] < max) currentSteps[fig]++;
+  updateFigure(fig);
+}
+function prevStep(fig) {
+  if (currentSteps[fig] > 0) currentSteps[fig]--;
+  updateFigure(fig);
+}
+function resetStep(fig) {
+  currentSteps[fig] = 0;
+  updateFigure(fig);
+}
+
+function updateFigure(fig) {
+  const data = figuresData[fig];
+  const step = currentSteps[fig];
+  document.getElementById("step-badge-" + fig).textContent = `Шаг ${step + 1} из ${data.steps.length}`;
+  document.getElementById("expl-" + fig).textContent = data.steps[step];
+  document.getElementById("formula-" + fig).textContent = step === data.steps.length - 1 ? data.formula : "";
+  draw(fig);
+}
+
+function draw(fig) {
+  const canvas = document.getElementById("canvas-" + fig);
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const step = currentSteps[fig];
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#111318";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  if (fig === "prism") drawPrism(ctx, step);
+  else if (fig === "cylinder") drawCylinder(ctx, step);
+  else if (fig === "pyramid") drawPyramid(ctx, step);
+  else if (fig === "cone") drawCone(ctx, step);
+  else if (fig === "sphere") drawSphere(ctx, step);
+}
+
+function drawPrism(ctx, step) {
+  const cx = 310, cy = 250, s = 90;
+  ctx.strokeStyle = "#5eead4";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(cx - s, cy);
+  ctx.lineTo(cx + s, cy);
+  ctx.lineTo(cx + s + 35, cy - 25);
+  ctx.lineTo(cx - s + 35, cy - 25);
+  ctx.closePath();
+  ctx.stroke();
+
+  if (step >= 1) {
+    ctx.strokeStyle = "#f87171";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx, cy - 130);
+    ctx.stroke();
+    ctx.fillStyle = "#f87171";
+    ctx.beginPath(); ctx.arc(cx, cy, 6, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy-130, 5, 0, Math.PI*2); ctx.fill();
+  }
+  if (step >= 2) {
+    ctx.strokeStyle = "#5eead4";
+    ctx.lineWidth = 1.4;
+    [-55, -25, 5, 35, 65].forEach(dx => {
+      ctx.beginPath();
+      ctx.moveTo(cx + dx, cy);
+      ctx.lineTo(cx + dx, cy - 130);
+      ctx.stroke();
+      ctx.fillStyle = "#5eead4";
+      ctx.beginPath(); ctx.arc(cx + dx, cy, 3.5, 0, Math.PI*2); ctx.fill();
+    });
+  }
+  if (step >= 3) {
+    ctx.strokeStyle = "#5eead4";
+    ctx.beginPath();
+    ctx.moveTo(cx - s, cy - 130);
+    ctx.lineTo(cx + s, cy - 130);
+    ctx.lineTo(cx + s + 35, cy - 155);
+    ctx.lineTo(cx - s + 35, cy - 155);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx - s, cy); ctx.lineTo(cx - s, cy - 130);
+    ctx.moveTo(cx + s, cy); ctx.lineTo(cx + s, cy - 130);
+    ctx.stroke();
+  }
+}
+
+function drawCylinder(ctx, step) {
+  const cx = 310, cy = 260, rx = 95, ry = 26;
+  ctx.strokeStyle = "#5eead4";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
+  ctx.stroke();
+
+  if (step >= 1) {
+    ctx.strokeStyle = "#f87171";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx, cy - 140);
+    ctx.stroke();
+    ctx.fillStyle = "#f87171";
+    ctx.beginPath(); ctx.arc(cx, cy, 6, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy-140, 5, 0, Math.PI*2); ctx.fill();
+  }
+  if (step >= 2) {
+    ctx.strokeStyle = "#5eead4";
+    ctx.lineWidth = 1.4;
+    [0, 0.9, 1.8, 2.7, 3.6, 4.5].forEach(a => {
+      const x = cx + Math.cos(a) * rx * 0.65;
+      const y = cy + Math.sin(a) * ry * 0.65;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x, y - 140);
+      ctx.stroke();
+      ctx.fillStyle = "#5eead4";
+      ctx.beginPath(); ctx.arc(x, y, 3.5, 0, Math.PI*2); ctx.fill();
+    });
+  }
+  if (step >= 3) {
+    ctx.strokeStyle = "#5eead4";
+    ctx.beginPath();
+    ctx.ellipse(cx, cy - 140, rx, ry, 0, 0, Math.PI*2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx - rx, cy); ctx.lineTo(cx - rx, cy - 140);
+    ctx.moveTo(cx + rx, cy); ctx.lineTo(cx + rx, cy - 140);
+    ctx.stroke();
+  }
+}
+
+function drawPyramid(ctx, step) {
+  const cx = 310, cy = 280;
+  ctx.strokeStyle = "#5eead4";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(cx - 95, cy);
+  ctx.lineTo(cx + 95, cy);
+  ctx.lineTo(cx + 55, cy - 35);
+  ctx.lineTo(cx - 55, cy - 35);
+  ctx.closePath();
+  ctx.stroke();
+
+  if (step >= 1) {
+    ctx.beginPath();
+    ctx.moveTo(cx - 95, cy); ctx.lineTo(cx, cy - 150);
+    ctx.moveTo(cx + 95, cy); ctx.lineTo(cx, cy - 150);
+    ctx.moveTo(cx - 55, cy - 35); ctx.lineTo(cx, cy - 150);
+    ctx.moveTo(cx + 55, cy - 35); ctx.lineTo(cx, cy - 150);
+    ctx.stroke();
+  }
+  if (step >= 2) {
+    ctx.fillStyle = "#5eead4";
+    ctx.font = "15px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText("3 пирамиды = 1 призма", cx, 50);
+  }
+  if (step >= 3) {
+    ctx.fillStyle = "rgba(94,234,212,0.15)";
+    ctx.beginPath();
+    ctx.moveTo(cx - 95, cy);
+    ctx.lineTo(cx, cy - 150);
+    ctx.lineTo(cx + 95, cy);
+    ctx.fill();
+  }
+}
+
+function drawCone(ctx, step) {
+  const cx = 310, cy = 270;
+  ctx.strokeStyle = "#5eead4";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.ellipse(cx, cy, 95, 26, 0, 0, Math.PI*2);
+  ctx.stroke();
+
+  if (step >= 1) {
+    ctx.beginPath();
+    ctx.moveTo(cx - 95, cy); ctx.lineTo(cx, cy - 150);
+    ctx.moveTo(cx + 95, cy); ctx.lineTo(cx, cy - 150);
+    ctx.stroke();
+  }
+  if (step >= 2) {
+    ctx.fillStyle = "#5eead4";
+    ctx.font = "15px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText("3 конуса = 1 цилиндр", cx, 50);
+  }
+  if (step >= 3) {
+    ctx.fillStyle = "rgba(94,234,212,0.15)";
+    ctx.beginPath();
+    ctx.moveTo(cx - 95, cy);
+    ctx.lineTo(cx, cy - 150);
+    ctx.lineTo(cx + 95, cy);
+    ctx.fill();
+  }
+}
+
+function drawSphere(ctx, step) {
+  const cx = 310, cy = 190;
+  // Cylinder
+  ctx.strokeStyle = "#6b7280";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.ellipse(cx, cy + 70, 85, 22, 0, 0, Math.PI*2);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.ellipse(cx, cy - 70, 85, 22, 0, 0, Math.PI*2);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(cx - 85, cy + 70); ctx.lineTo(cx - 85, cy - 70);
+  ctx.moveTo(cx + 85, cy + 70); ctx.lineTo(cx + 85, cy - 70);
+  ctx.stroke();
+
+  const r = 35 + step * 12;
+  ctx.strokeStyle = "#5eead4";
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.ellipse(cx, cy, r, r * 0.72, 0, 0, Math.PI*2);
+  ctx.stroke();
+  if (step >= 2) {
+    ctx.fillStyle = "rgba(94,234,212,0.18)";
+    ctx.fill();
+  }
+  if (step >= 3) {
+    ctx.fillStyle = "#5eead4";
+    ctx.font = "14px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText("Шар = 2/3 цилиндра", cx, 40);
+  }
+}
+
+function initPractice() {
+  const cont = document.getElementById("practice-container");
+  cont.innerHTML = practiceTasks.map((t, i) => `
+    <div class="task" id="pt-${i}">
+      <p><strong>${t.q}</strong></p>
+      ${t.options.map((o, oi) => `<button onclick="checkPractice(${i}, ${oi})">${o}</button>`).join("")}
+      <div class="feedback" id="pf-${i}"></div>
+    </div>
+  `).join("");
+}
+
+function checkPractice(ti, oi) {
+  const t = practiceTasks[ti];
+  const el = document.getElementById("pt-" + ti);
+  const fb = document.getElementById("pf-" + ti);
+  if (oi === t.correct) {
+    el.classList.add("correct");
+    fb.innerHTML = `<span class="feedback correct">Верно! ${t.hint}</span>`;
+    solved.add(ti);
+  } else {
+    el.classList.add("incorrect");
+    fb.innerHTML = `<span class="feedback incorrect">Неверно. ${t.hint}</span>`;
+  }
+}
+
+function initSummary() {
+  const cont = document.getElementById("summary-container");
+  cont.innerHTML = Object.values(figuresData).map(f => `
+    <div class="summary-card">
+      <div class="fig-name">${f.name}</div>
+      <div class="fig-formula">${f.formula}</div>
+    </div>
+  `).join("");
+}
+
+// Init
+switchPanel("prism");
+updateFigure("prism");
+updateFigure("cylinder");
+updateFigure("pyramid");
+updateFigure("cone");
+updateFigure("sphere");
+initPractice();
+initSummary();
+</script>
 </body>
 </html>

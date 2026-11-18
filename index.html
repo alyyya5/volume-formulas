@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101314">
+  <meta name="theme-color" content="#121212">
   <title>Формулы объёма: увидеть, понять, применить</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -22,10 +22,15 @@
 
   <main>
     <section id="hero" class="wrap">
-      <p class="kicker">СТЕРЕОМЕТРИЯ</p>
-      <h1>Формулы<br>объёма</h1>
-      <p class="lead">Не запоминай формулу — пойми, откуда она берётся. Смотри, как пространство заполняется.</p>
-      <button class="primary" id="start-btn">Начать изучение</button>
+      <div class="hero-content">
+        <p class="kicker">СТЕРЕОМЕТРИЯ · ОБЪЁМ</p>
+        <h1>Формулы<br>объёма</h1>
+        <p class="lead">Не запоминай формулу — пойми, откуда она берётся. Смотри по шагам, как точки основания заполняют пространство.</p>
+        <button class="primary" id="start-btn">Начать изучение</button>
+      </div>
+      <div class="hero-doodle" id="hero-canvas-wrap">
+        <canvas id="hero-canvas" width="420" height="320"></canvas>
+      </div>
     </section>
 
     <section id="intro" class="wrap">
@@ -35,22 +40,28 @@
     </section>
 
     <section id="figures" class="wrap">
-      <h2>Вывод формул</h2>
+      <h2>Вывод формул по шагам</h2>
       <div class="tabs" id="figure-tabs"></div>
 
-      <div class="figure-panel">
-        <div class="canvas-wrap">
-          <canvas id="animation-canvas" width="800" height="500"></canvas>
+      <div class="figure-slide">
+        <div class="slide-visual">
+          <div class="canvas-wrap">
+            <canvas id="animation-canvas" width="700" height="460"></canvas>
+          </div>
+          <div class="controls">
+            <button id="btn-prev" class="ghost">← Предыдущий шаг</button>
+            <button id="btn-next" class="primary">Следующий шаг →</button>
+            <button id="btn-replay" class="ghost">С начала</button>
+          </div>
         </div>
-        <div class="controls">
-          <button id="btn-pause" class="ghost">Пауза / Продолжить</button>
-          <button id="btn-replay" class="ghost">Повторить</button>
-          <button id="btn-layers" class="ghost">Плотность точек</button>
-          <button id="btn-next" class="ghost">Следующий шаг</button>
+        <div class="slide-text">
+          <div id="step-indicator" class="step-badge">Шаг 1 из 4</div>
+          <div id="step-explanation" class="explanation"></div>
+          <div id="formula-box" class="formula"></div>
         </div>
-        <div id="theory-container"></div>
-        <div id="tasks-container"></div>
       </div>
+
+      <div id="tasks-container" class="tasks-block"></div>
     </section>
 
     <section id="summary" class="wrap">
